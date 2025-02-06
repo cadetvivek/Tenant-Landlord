@@ -8,6 +8,8 @@ function Signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [role, setRole] = useState('tenant'); // Default to Tenant
+  const [mobileNo, setMobileNo] = useState(''); // State for mobile number
   const [error, setError] = useState('');
   const [successMessage, setSuccess] = useState('');
   const navigate = useNavigate();
@@ -23,8 +25,15 @@ function Signup() {
       return;
     }
 
+    // Validate mobile number (example: basic 10-digit validation)
+    const phoneRegex = /^[0-9]{10}$/;
+    if (!phoneRegex.test(mobileNo)) {
+      setError('Please enter a valid 10-digit mobile number.');
+      return;
+    }
+
     try {
-      const response = await register({ name, email, password });
+      const response = await register({ name, email, password, role, mobileNo,confirmPassword });
 
       if (response?.success) {
         setSuccess(response.message || 'Signup successful! Redirecting...');
@@ -138,6 +147,44 @@ function Signup() {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                 />
+              </div>
+            </div>
+
+            {/* Mobile Number Input */}
+            <div>
+              <label htmlFor="mobileNo" className="block text-sm font-medium text-gray-700">
+                Mobile Number
+              </label>
+              <div className="mt-1">
+                <input
+                  id="mobileNo"
+                  name="mobileNo"
+                  type="text"
+                  required
+                  value={mobileNo}
+                  onChange={(e) => setMobileNo(e.target.value)}
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+            </div>
+
+            {/* Dropdown for Role Selection */}
+            <div>
+              <label htmlFor="role" className="block text-sm font-medium text-gray-700">
+                Select Role
+              </label>
+              <div className="mt-1">
+                <select
+                  id="role"
+                  name="role"
+                  required
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-white focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                >
+                  <option value={1}>Tenant</option>
+                  <option value={2}>Landlord</option>
+                </select>
               </div>
             </div>
 

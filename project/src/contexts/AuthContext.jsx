@@ -46,6 +46,39 @@ export function AuthProvider({ children }) {
     }
   };
 
+  const register = async (credentials) => {
+    try {
+      const { name, email, password, role, mobileNo,confirmPassword } = credentials;  // Extract mobileNo along with other data
+    
+      // Send the data to the server
+      const response = await axios.post("https://landlordbackend.onrender.com/signup", {
+        name,
+        email,
+        password,
+        userType:role,
+        mobileNo ,
+        confirmPassword // Include mobileNo in the API request
+      });
+    
+      const { status, message } = response.data;
+    
+      if (status) {
+        return { success: true, message: message || "Signup successful!" };
+      } else {
+        return { success: false, message: message || "Signup failed. Please try again." };
+      }
+    } catch (error) {
+      // Enhanced error handling for various types of errors
+      if (error.response) {
+        return { success: false, message: error.response.data.message || "An error occurred during signup. Please try again." };
+      } else if (error.request) {
+        return { success: false, message: "No response received from the server. Please try again later." };
+      } else {
+        return { success: false, message: "An unexpected error occurred. Please try again." };
+      }
+    }
+  };
+
   const logout = () => {
     setIsAuthenticated(false);
     setUser(null);
@@ -53,7 +86,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout, message }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, login, logout,register,message }}>
       {children}
     </AuthContext.Provider>
   );
