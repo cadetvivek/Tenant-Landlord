@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Building2 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
@@ -7,18 +7,29 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [successMessage, setSuccess] = useState(''); // Fixed typo
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login } = useAuth(); // Removed message from destructuring since it's being set from login()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    
-    const success = login({ email, password });
-    if (success) {
-      navigate('/');
-    } else {
-      setError('Invalid credentials. Please try again.');
+    setSuccess('');
+
+    try {
+      const response = await login({ email, password });
+
+      if (response?.success) {
+        setSuccess(response.message || 'Login successful!');
+
+        setTimeout(() => {
+          navigate('/');
+        }, 1000); // Fixed: removed quotes around timeout duration
+      } else {
+        setError(response?.message || 'Login failed. Please try again.');
+      }
+    } catch (err) {
+      setError('An unexpected error occurred. Please try again.');
     }
   };
 
@@ -46,7 +57,13 @@ function Login() {
                 {error}
               </div>
             )}
-            
+
+            {successMessage && (
+              <div className="bg-green-50 border border-green-200 text-green-600 px-4 py-3 rounded-lg text-sm">
+                {successMessage}
+              </div>
+            )}
+
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                 Email address
@@ -92,21 +109,6 @@ function Login() {
               </button>
             </div>
           </form>
-
-          <div className="mt-6">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300" />
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Demo credentials</span>
-              </div>
-            </div>
-            <div className="mt-4 text-center text-xs text-gray-500">
-              Email: demo@example.com<br />
-              Password: password
-            </div>
-          </div>
         </div>
       </div>
     </div>
