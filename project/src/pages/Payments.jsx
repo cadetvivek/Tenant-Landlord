@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { DollarSign, Download, ChevronDown, Filter } from 'lucide-react';
+import { DollarSign, Download, ChevronDown, Filter, Clock, AlertTriangle } from 'lucide-react';
 
 function Payments() {
   const payments = [
@@ -49,26 +50,12 @@ function Payments() {
   };
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-8">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Payments</h1>
-          <p className="text-gray-600">Track and manage rent payments</p>
-        </div>
-        <div className="flex space-x-3">
-          <button className="flex items-center px-4 py-2 text-gray-600 bg-white rounded-lg hover:bg-gray-50 border">
-            <Download className="w-5 h-5 mr-2" />
-            Export
-          </button>
-          <button className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-            <DollarSign className="w-5 h-5 mr-2" />
-            Record Payment
-          </button>
-        </div>
-      </div>
+    <div className="p-6">
+      <h1 className="text-2xl font-bold text-gray-900">Payments</h1>
+      <p className="text-gray-600">Track and manage rent payments</p>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-6">
         <div className="bg-white rounded-xl shadow-sm p-6">
           <div className="flex items-center justify-between">
             <div>
@@ -129,34 +116,15 @@ function Payments() {
                 <th className="px-6 py-3 font-medium">Status</th>
                 <th className="px-6 py-3 font-medium">Date</th>
                 <th className="px-6 py-3 font-medium">Method</th>
-                <th className="px-6 py-3 font-medium"></th>
               </tr>
             </thead>
-            <tbody className="divide-y">
+            <tbody>
               {payments.map((payment) => (
-                <tr key={payment.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4">
-                    <div>
-                      <p className="text-sm font-medium text-gray-900">{payment.tenant}</p>
-                      <p className="text-xs text-gray-500">{payment.unit}</p>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-500">{payment.property}</td>
-                  <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                    ${payment.amount}
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(payment.status)}`}>
-                      {payment.status.charAt(0).toUpperCase() + payment.status.slice(1)}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-500">{payment.date}</td>
-                  <td className="px-6 py-4 text-sm text-gray-500">{payment.method}</td>
-                  <td className="px-6 py-4">
-                    <button className="text-gray-400 hover:text-gray-500">
-                      <ChevronDown className="w-5 h-5" />
-                    </button>
-                  </td>
+                <tr key={payment.id} className="border-b">
+                  <td className="px-6 py-4">{payment.tenant}</td>
+                  <td className="px-6 py-4">{payment.property}</td>
+                  <td className="px-6 py-4">${payment.amount}</td>
+                  <td className={`px-6 py-4 ${getStatusColor(payment.status)}`}>{payment.status}</td>
                 </tr>
               ))}
             </tbody>

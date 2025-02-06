@@ -1,14 +1,19 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from './contexts/AuthContext';
-import Layout from './components/Layout';
-import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
-import Properties from './pages/Properties';
-import Maintenance from './pages/Maintenance';
-import Messages from './pages/Messages';
-import Payments from './pages/Payments';
-import Schedule from './pages/Schedule';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
+import Layout from "./components/Layout";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import Properties from "./pages/Properties";
+import Maintenance from "./pages/Maintenance";
+import Messages from "./pages/Messages";
+import Payments from "./pages/Payments";
+import Schedule from "./pages/Schedule";
 
 function PrivateRoute({ children }) {
   const { isAuthenticated } = useAuth();
@@ -43,3 +48,5 @@ function App() {
 }
 
 export default App;
+
+
