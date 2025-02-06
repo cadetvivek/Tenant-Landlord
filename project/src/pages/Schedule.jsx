@@ -1,50 +1,89 @@
-import React from 'react';
-import { Calendar as CalendarIcon, Clock, MapPin, Users } from 'lucide-react';
+
+import React, { useState, useEffect } from "react";
+import { ref, push, onValue } from "firebase/database"; // Firebase RTDB functions
+import { rtdb } from "../firebase"; // Import RTDB config
+import { Calendar as CalendarIcon, Clock, MapPin, Users } from "lucide-react";
 
 function Schedule() {
-  const appointments = [
-    {
-      id: 1,
-      title: 'Property Inspection',
-      property: 'Sunset Apartments',
-      unit: 'Unit 304',
-      date: '2024-03-20',
-      time: '10:00 AM',
-      type: 'inspection',
-      attendees: ['John Doe', 'Sarah Johnson'],
-    },
-    {
-      id: 2,
-      title: 'AC Repair',
-      property: 'Pine Grove Complex',
-      unit: 'Unit 12B',
-      date: '2024-03-21',
-      time: '2:00 PM',
-      type: 'maintenance',
-      attendees: ['Tech Team', 'Michael Brown'],
-    },
-    {
-      id: 3,
-      title: 'Lease Signing',
-      property: 'Oakwood Heights',
-      unit: 'Unit 506',
-      date: '2024-03-22',
-      time: '11:30 AM',
-      type: 'meeting',
-      attendees: ['Emma Wilson', 'Legal Team'],
-    },
-  ];
+  const [appointments, setAppointments] = useState([]);
+  const [newAppointment, setNewAppointment] = useState({
+    title: "",
+    property: "",
+    unit: "",
+    date: "",
+    time: "",
+    type: "maintenance",
+    attendees: "",
+  });
 
+  // Fetch Appointments from Firebase Realtime Database
+  useEffect(() => {
+    const appointmentRef = ref(rtdb, "appointments");
+
+    onValue(appointmentRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        const fetchedAppointments = Object.keys(data).map((key) => ({
+          id: key,
+          ...data[key],
+        }));
+        setAppointments(fetchedAppointments);
+      } else {
+        setAppointments([]); // No appointments found
+      }
+    });
+  }, []);
+
+  // Handle Input Change
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewAppointment((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Add New Appointment to Firebase
+  const handleAddAppointment = async () => {
+    if (!newAppointment.title || !newAppointment.date || !newAppointment.time) {
+      alert("Please fill all required fields.");
+      return;
+    }
+
+    try {
+      const appointmentRef = ref(rtdb, "appointments");
+      const appointmentData = {
+        ...newAppointment,
+        attendees: newAppointment.attendees.split(",").map((a) => a.trim()),
+      };
+
+      await push(appointmentRef, appointmentData); // Store in RTDB
+      console.log("Appointment added successfully!");
+
+      // Clear form after submission
+      setNewAppointment({
+        title: "",
+        property: "",
+        unit: "",
+        date: "",
+        time: "",
+        type: "maintenance",
+        attendees: "",
+      });
+    } catch (error) {
+      console.error("Error adding appointment: ", error);
+      alert("Failed to save appointment. Check console for details.");
+    }
+  };
+
+  // Get Event Color based on type
   const getEventColor = (type) => {
     switch (type) {
-      case 'inspection':
-        return 'bg-purple-100 text-purple-700 border-purple-200';
-      case 'maintenance':
-        return 'bg-blue-100 text-blue-700 border-blue-200';
-      case 'meeting':
-        return 'bg-green-100 text-green-700 border-green-200';
+      case "inspection":
+        return "bg-purple-100 text-purple-700 border-purple-200";
+      case "maintenance":
+        return "bg-blue-100 text-blue-700 border-blue-200";
+      case "meeting":
+        return "bg-green-100 text-green-700 border-green-200";
       default:
-        return 'bg-gray-100 text-gray-700 border-gray-200';
+        return "bg-gray-100 text-gray-700 border-gray-200";
     }
   };
 
@@ -55,52 +94,111 @@ function Schedule() {
           <h1 className="text-2xl font-bold text-gray-900">Schedule</h1>
           <p className="text-gray-600">Manage appointments and meetings</p>
         </div>
-        <button className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-          <CalendarIcon className="w-5 h-5 mr-2" />
-          New Appointment
-        </button>
       </div>
 
+      {/* Appointment Form */}
+      <div className="bg-white rounded-xl shadow-sm p-6 mb-6">
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">Book a Maintenance Appointment</h2>
+        <div className="grid grid-cols-2 gap-4">
+          <input
+            type="text"
+            name="title"
+            placeholder="Appointment Title"
+            value={newAppointment.title}
+            onChange={handleInputChange}
+            className="p-2 border rounded"
+          />
+          <input
+            type="text"
+            name="property"
+            placeholder="Property Name"
+            value={newAppointment.property}
+            onChange={handleInputChange}
+            className="p-2 border rounded"
+          />
+          <input
+            type="text"
+            name="unit"
+            placeholder="Unit Number"
+            value={newAppointment.unit}
+            onChange={handleInputChange}
+            className="p-2 border rounded"
+          />
+          <input
+            type="date"
+            name="date"
+            value={newAppointment.date}
+            onChange={handleInputChange}
+            className="p-2 border rounded"
+          />
+          <input
+            type="time"
+            name="time"
+            value={newAppointment.time}
+            onChange={handleInputChange}
+            className="p-2 border rounded"
+          />
+          <input
+            type="text"
+            name="attendees"
+            placeholder="Attendees (comma-separated)"
+            value={newAppointment.attendees}
+            onChange={handleInputChange}
+            className="p-2 border rounded"
+          />
+          <button
+            onClick={handleAddAppointment}
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 col-span-2"
+          >
+            Add Appointment
+          </button>
+        </div>
+      </div>
+
+      {/* Upcoming Appointments */}
       <div className="grid lg:grid-cols-7 gap-6">
-        {/* Calendar */}
+        {/* Calendar Placeholder */}
         <div className="lg:col-span-5 bg-white rounded-xl shadow-sm p-6">
           <div className="text-center">
-            {/* Calendar component would go here */}
             <p className="text-gray-500">Calendar integration coming soon...</p>
           </div>
         </div>
 
-        {/* Upcoming Appointments */}
+        {/* Appointments List */}
         <div className="lg:col-span-2 space-y-6">
           <div className="bg-white rounded-xl shadow-sm p-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">Upcoming</h2>
             <div className="space-y-4">
-              {appointments.map((appointment) => (
-                <div
-                  key={appointment.id}
-                  className={`p-4 rounded-lg border ${getEventColor(appointment.type)}`}
-                >
-                  <h3 className="font-medium">{appointment.title}</h3>
-                  <div className="mt-2 space-y-2 text-sm">
-                    <div className="flex items-center">
-                      <CalendarIcon className="w-4 h-4 mr-2" />
-                      <span>{appointment.date}</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Clock className="w-4 h-4 mr-2" />
-                      <span>{appointment.time}</span>
-                    </div>
-                    <div className="flex items-center">
-                      <MapPin className="w-4 h-4 mr-2" />
-                      <span>{appointment.property} - {appointment.unit}</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Users className="w-4 h-4 mr-2" />
-                      <span>{appointment.attendees.join(', ')}</span>
+              {appointments.length === 0 ? (
+                <p className="text-gray-500">No upcoming appointments.</p>
+              ) : (
+                appointments.map((appointment) => (
+                  <div
+                    key={appointment.id}
+                    className={`p-4 rounded-lg border ${getEventColor(appointment.type)}`}
+                  >
+                    <h3 className="font-medium">{appointment.title}</h3>
+                    <div className="mt-2 space-y-2 text-sm">
+                      <div className="flex items-center">
+                        <CalendarIcon className="w-4 h-4 mr-2" />
+                        <span>{appointment.date}</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Clock className="w-4 h-4 mr-2" />
+                        <span>{appointment.time}</span>
+                      </div>
+                      <div className="flex items-center">
+                        <MapPin className="w-4 h-4 mr-2" />
+                        <span>{appointment.property} - {appointment.unit}</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Users className="w-4 h-4 mr-2" />
+                        <span>{appointment.attendees?.join(", ")}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </div>
         </div>
