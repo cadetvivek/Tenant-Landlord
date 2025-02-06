@@ -8,7 +8,7 @@ function Dashboard() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Welcome back, Vivek!</h1>
+        <h1 className="text-2xl font-bold text-gray-900">Welcome back, User!</h1>
         <p className="text-gray-600">Here's what's happening with your properties today.</p>
       </div>
 
