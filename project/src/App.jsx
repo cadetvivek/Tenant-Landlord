@@ -14,6 +14,7 @@ import Maintenance from "./pages/Maintenance";
 import Messages from "./pages/Messages";
 import Payments from "./pages/Payments";
 import Schedule from "./pages/Schedule";
+import Signup from "./pages/Signup";
 
 function PrivateRoute({ children }) {
   const { isAuthenticated } = useAuth();
@@ -25,7 +26,9 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
+       
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup/>}/>
           <Route
             path="/"
             element={
@@ -48,5 +51,4 @@ function App() {
 }
 
 export default App;
-
 
