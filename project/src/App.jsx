@@ -10,7 +10,7 @@ import Layout from "./components/Layout";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Properties from "./pages/Properties";
-import Maintenance from "./pages/Maintenance";
+import Maintenance from "./components/MaintenanceRequests";
 import Messages from "./pages/Messages";
 import Payments from "./pages/Payments";
 import Schedule from "./pages/Schedule";
