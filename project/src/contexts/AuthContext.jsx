@@ -17,7 +17,9 @@ export function AuthProvider({ children }) {
         password: credentials.password
       });
 
-      const { status, message, name, email } = response.data; // Extract response data
+      const { status, message, name, email } = response.data; 
+
+     console.log(name)
 
       setMessage(message);
 
@@ -26,15 +28,15 @@ export function AuthProvider({ children }) {
         setUser({
           name,
           email,
-          role: 'Property Manager', 
-          avatar: 'VK', 
+          role: response.data.data.userType === 1 ? "Tenant" : "LandLord",
+          avatar: response.data.data.name[0]
         });
         
-        return { success: true, message }; // Return structured response
+        return { success: true, message }; 
       } else {
         setIsAuthenticated(false);
         setUser(null);
-        return { success: false, message }; // Return structured response
+        return { success: false, message }; 
       }
     } catch (error) {
       console.error("Login Failed", error);
