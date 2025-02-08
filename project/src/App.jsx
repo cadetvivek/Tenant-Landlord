@@ -31,6 +31,7 @@ function App() {
             element={
               <PrivateRoute>
                 <Layout />
+               
               </PrivateRoute>
             }
           >
@@ -40,6 +41,7 @@ function App() {
             <Route path="messages" element={<Messages />} />
             <Route path="payments" element={<Payments />} />
             <Route path="schedule" element={<Schedule />} />
+       
           </Route>
         </Routes>
       </Router>
@@ -48,5 +50,3 @@ function App() {
 }
 
 export default App;
-
-

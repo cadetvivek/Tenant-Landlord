@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { Bell, Menu, X } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import Sidebar from './Sidebar';
+import Footer from "../pages/Footer";
 
 function Layout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -35,7 +36,9 @@ function Layout() {
           <Outlet />
         </div>
       </div>
+      <Footer />
     </div>
+    
   );
 }
 
