@@ -6,7 +6,7 @@ import { Calendar as CalendarIcon, Clock, MapPin, Users } from "lucide-react";
 import { Calendar, momentLocalizer } from "react-big-calendar"; // React Big Calendar
 import moment from "moment"; // For date handling
 import "react-big-calendar/lib/css/react-big-calendar.css"; // Calendar styles
-
+import ChatBot from "../components/ChateBot";
 // Configure the localizer for React Big Calendar
 const localizer = momentLocalizer(moment);
 
@@ -243,6 +243,7 @@ function Schedule() {
           </div>
         </div>
       </div>
+      <ChatBot/>
     </div>
   );
 }

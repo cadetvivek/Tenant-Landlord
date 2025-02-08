@@ -1,5 +1,5 @@
 import React from 'react';
-
+import ChatBot from '../components/ChateBot';
 import MaintenanceRequests from '../components/MaintenanceRequests';
 function Maintenance() {
   
@@ -7,6 +7,7 @@ function Maintenance() {
           <div>
            
             <MaintenanceRequests/>
+            <ChatBot/>
           </div>
     )
    

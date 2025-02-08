@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { ref, push, onValue } from "firebase/database";
 import { rtdb } from "../firebase"; // Import the real-time database
-
+import ChatBot from "../components/ChateBot";
 function Messages() {
   const [selectedChat, setSelectedChat] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -96,7 +96,9 @@ function Messages() {
       ) : (
         <p className="p-4">Select a chat</p>
       )}
+       <ChatBot/>
     </div>
+     
   );
 }
 

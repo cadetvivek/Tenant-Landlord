@@ -16,6 +16,7 @@ import Payments from "./pages/Payments";
 import Schedule from "./pages/Schedule";
 import Signup from "./pages/Signup";
 
+
 function PrivateRoute({ children }) {
   const { isAuthenticated } = useAuth();
   return isAuthenticated ? children : <Navigate to="/login" />;
@@ -23,6 +24,7 @@ function PrivateRoute({ children }) {
 
 function App() {
   return (
+
     <AuthProvider>
       <Router>
         <Routes>
@@ -43,6 +45,8 @@ function App() {
             <Route path="messages" element={<Messages />} />
             <Route path="payments" element={<Payments />} />
             <Route path="schedule" element={<Schedule />} />
+            
+          
           </Route>
         </Routes>
       </Router>

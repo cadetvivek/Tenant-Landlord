@@ -1,6 +1,6 @@
 import React from 'react';
 import { Building2, Users, DollarSign, Plus } from 'lucide-react';
-
+import ChatBot from '../components/ChateBot';
 function Properties() {
   const properties = [
     {
@@ -91,6 +91,7 @@ function Properties() {
           </div>
         ))}
       </div>
+      <ChatBot/>
     </div>
   );
 }
