@@ -35,8 +35,8 @@ export function AuthProvider({ children }) {
 
       if (status) {
         const userData = {
-          name,
-          email,
+          name:response.data.data.name,
+          email:response.data.data.email,
           role: response.data.data.userType === 1 ? "Tenant" : "LandLord",
           avatar: response.data.data[0]
         };

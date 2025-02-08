@@ -8,7 +8,7 @@ function Signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [role, setRole] = useState('tenant'); // Default to Tenant
+  const [role, setRole] = useState(1); // Default to Tenant
   const [mobileNo, setMobileNo] = useState(''); // State for mobile number
   const [error, setError] = useState('');
   const [successMessage, setSuccess] = useState('');

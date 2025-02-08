@@ -3,8 +3,14 @@ import DashboardStats from '../components/DashboardStats';
 import MaintenanceRequests from '../components/MaintenanceRequests';
 import RecentActivity from '../components/RecentActivity';
 import PropertyOverview from '../components/PropertyOverview';
+import { useAuth } from '../contexts/AuthContext';
 
 function Dashboard() {
+
+    const { user } = useAuth();
+
+    console.log(user)
+
   return (
     <div>
       <div className="mb-8">
