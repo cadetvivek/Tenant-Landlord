@@ -41,20 +41,21 @@ function Login() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-600 flex items-center justify-center p-4">
       <div className="w-full max-w-md space-y-8">
-        {/* Animated Logo */}
-        <div className="flex justify-center animate-float">
+        {/*Animated Logo */}
+         <div className="flex justify-center animate-float">
           <div className="w-16 h-16 bg-white/10 backdrop-blur-lg rounded-2xl flex items-center justify-center shadow-xl">
             <Building2 className="w-8 h-8 text-white animate-pulse" />
           </div>
         </div>
+      
 
         {/* Title */}
         <div className="text-center">
           <h2 className="mt-6 text-4xl font-bold text-white tracking-tight">
-            Welcome Back
+             Welcome Back
           </h2>
-          <p className="mt-2 text-sm text-white/80">
-            Manage your properties seamlessly
+          <p  className="mt-2 text-sm text-white/80">
+           Manage your properties seamlessly
           </p>
         </div>
 

@@ -8,7 +8,7 @@ function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [role, setRole] = useState("tenant"); // Default to Tenant
+  const [role, setRole] = useState(1); // Default to Tenant
   const [mobileNo, setMobileNo] = useState(""); // State for mobile number
   const [error, setError] = useState("");
   const [successMessage, setSuccess] = useState("");
@@ -80,7 +80,7 @@ function Signup() {
 </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white/10 backdrop-blur-lg rounded-3xl shadow-xl p-8 space-y-6 transform transition-all duration-300 hover:shadow-2xl">
+        <div className="bg-purple-400 backdrop-blur-lg rounded-3xl shadow-xl p-8 space-y-6 transform transition-all duration-300 hover:shadow-2xl">
           <form className="space-y-6" onSubmit={handleSubmit}>
             {error && (
               <div className="flex items-center space-x-2 bg-red-100/20 text-red-100 px-4 py-3 rounded-xl animate-fade-in">
@@ -110,7 +110,7 @@ function Signup() {
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent transition-all duration-200"
+                  className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/010 rounded-xl text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent transition-all duration-200"
                 />
               </div>
             </div>
@@ -131,7 +131,7 @@ function Signup() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent transition-all duration-200"
+                  className="w-full pl-10 pr-4 py-3 bg-white/5  border border-white/100 rounded-xl text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent transition-all duration-200"
                 />
               </div>
             </div>
@@ -152,7 +152,7 @@ function Signup() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent transition-all duration-200"
+                  className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/100 rounded-xl text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent transition-all duration-200"
                 />
               </div>
             </div>
@@ -172,7 +172,7 @@ function Signup() {
                   required
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent transition-all duration-200"
+                  className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/100 rounded-xl text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent transition-all duration-200"
                 />
               </div>
             </div>
@@ -193,7 +193,7 @@ function Signup() {
                   required
                   value={mobileNo}
                   onChange={(e) => setMobileNo(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent transition-all duration-200"
+                  className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/100 rounded-xl text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-transparent transition-all duration-200"
                 />
               </div>
             </div>
@@ -212,8 +212,9 @@ function Signup() {
                   name="role"
                   required
                   value={role}
-                  onChange={(e) => setRole(e.target.value)}
-                  className="w-full pl-3 pr-10 py-3.5 bg-blue-500/5 border-2 border-white/10 rounded-xl text-black placeholder-white/40 focus:border-white/30 focus:ring-4 focus:ring-white/10 transition-all duration-300"
+                  onChange={(e) => setRole(Number(e.target.value))}
+                 
+                  className="w-full pl-3 pr-10 py-3.5 bg-blue-500/5 border-2 border-white/100 rounded-xl text-black placeholder-white/40 focus:border-white/30 focus:ring-4 focus:ring-white/10 transition-all duration-300"
                 >
                   <option value={1}>Tenant</option>
                   <option value={2}>Landlord</option>
@@ -225,11 +226,18 @@ function Signup() {
             <div className="animate-fade-in-up delay-600">
               <button
                 type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-300"
+                className="w-full flex justify-center py-2 px-4 border border-white/100 rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-300"
               >
                 Sign up
               </button>
             </div>
+            <button
+              type="button"
+              onClick={() => navigate('/login')}
+              className="w-full flex justify-center py-2 px-4 border border-white/100 rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-300"
+            >
+              Click here to login
+            </button>
           </form>
         </div>
       </div>
