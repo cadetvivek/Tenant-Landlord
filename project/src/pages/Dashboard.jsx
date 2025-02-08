@@ -4,7 +4,10 @@ import MaintenanceRequests from '../components/MaintenanceRequests';
 import RecentActivity from '../components/RecentActivity';
 import PropertyOverview from '../components/PropertyOverview';
 import ChatBot from '../components/ChateBot';
+import { useAuth} from '../contexts/AuthContext'
 function Dashboard() {
+  const { user} = useAuth();
+  console.log();
   return (
     <div>
       <div className="mb-8">
