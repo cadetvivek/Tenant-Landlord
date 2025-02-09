@@ -14,7 +14,7 @@ function Sidebar({ isOpen, onClose }) {
     { icon: MessageSquare, label: 'Messages', path: '/messages' },
     { icon: CreditCard, label: 'Payments', path: '/payments' },
     { icon: Calendar, label: 'Schedule', path: '/schedule' },
-    { icon: Settings, label: 'Settings', path: '/settings' },
+    // { icon: Settings, label: 'Settings', path: '/settings' },
   ];
 
   const handleLogout = () => {
@@ -63,7 +63,7 @@ function Sidebar({ isOpen, onClose }) {
         <div className="absolute bottom-0 w-full border-t">
           <div className="p-4">
             <div className="flex items-center">
-              <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white">
+              <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white cursor-pointer ...">
                 {user?.avatar}
               </div>
               <div className="ml-3">
