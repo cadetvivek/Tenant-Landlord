@@ -15,7 +15,7 @@ import Messages from "./pages/Messages";
 import Payments from "./pages/Payments";
 import Schedule from "./pages/Schedule";
 import Signup from "./pages/Signup";
-
+import DashboardStats from "./components/DashboardStats"
 
 function PrivateRoute({ children }) {
   const { isAuthenticated } = useAuth();
@@ -23,6 +23,8 @@ function PrivateRoute({ children }) {
 }
 
 function App() {
+  
+  
   return (
 
     <AuthProvider>
@@ -55,4 +57,6 @@ function App() {
 }
 
 export default App;
+
+
 

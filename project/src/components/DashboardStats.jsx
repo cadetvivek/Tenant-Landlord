@@ -42,6 +42,8 @@ function DashboardStats(){
       description: 'House Rent Payment',
       handler: function(response) {
         setPaymentSuccess(true);
+     
+
       },
       prefill: {
         name: 'John Doe',
@@ -99,3 +101,4 @@ function DashboardStats(){
 };
 
 export default DashboardStats
+
