@@ -8,7 +8,8 @@ import ChatBot from '../components/ChateBot';
 import { useAuth } from '../contexts/AuthContext';
 import TestimonialCarousel from './Textimonial';
 import Search from './Search';
-
+import Footer from './Footer';
+import logo from '../assets/logo.png'
 const Dashboard = () =>{ 
   const { user } = useAuth();
   const [textColorIndex, setTextColorIndex] = useState(0);
@@ -37,6 +38,7 @@ const Dashboard = () =>{
           <h1 className={`text-3xl md:text-4xl font-bold mb-1 mt-0 transition-all duration-600
                          animate-bounce ${colors[textColorIndex]}
                          tracking-tight leading-none`}>
+              <img src={logo} alt="RentEasy Logo" className="h-8 w-8 animate-spin-slow" />
             Welcome to RentEasy, {user?.displayName || user?.name || 'User'}!
           </h1>
           <p className={`text-2xl font-bold transition-all duration-900 animate-pulse
@@ -108,6 +110,9 @@ const Dashboard = () =>{
      </div>
      <div className='mt-10'>
        <Search/>
+     </div>
+     <div className='mt-0'>
+      <Footer/>
      </div>
     </div>
     
