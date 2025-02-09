@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { DollarSign, Download, ChevronDown, Filter, Clock, AlertTriangle } from 'lucide-react';
+import { IndianRupee, Download, ChevronDown, Filter, Clock, AlertTriangle } from 'lucide-react';
 
 function Payments() {
   const payments = [
@@ -60,10 +60,10 @@ function Payments() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Total Collected</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">$24,500</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">₹24,500</p>
             </div>
             <div className="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center">
-              <DollarSign className="w-6 h-6 text-green-600" />
+              <IndianRupee className="w-6 h-6 text-green-600" />
             </div>
           </div>
           <p className="text-sm text-green-600 mt-4">+12% from last month</p>
@@ -73,7 +73,7 @@ function Payments() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Pending</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">$3,800</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">₹3,800</p>
             </div>
             <div className="w-12 h-12 bg-yellow-50 rounded-lg flex items-center justify-center">
               <Clock className="w-6 h-6 text-yellow-600" />
@@ -86,7 +86,7 @@ function Payments() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Overdue</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">$2,000</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">₹2,000</p>
             </div>
             <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center">
               <AlertTriangle className="w-6 h-6 text-red-600" />

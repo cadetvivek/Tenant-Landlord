@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Building2, Users, DollarSign, Plus, X, Trash } from "lucide-react";
+import { Building2, Users, IndianRupee, Plus, X, Trash } from "lucide-react";
 import axios from "axios";
 import { useAuth } from "../contexts/AuthContext";
-
+import ChatBot from "../components/ChateBot";
 function Properties() {
   const [properties, setProperties] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -152,8 +152,8 @@ function Properties() {
                     <p className="text-sm font-medium">{property.occupancy}%</p>
                   </div>
                   <div className="text-center">
-                    <DollarSign className="w-5 h-5 text-yellow-600 mx-auto" />
-                    <p className="text-sm font-medium">${property.revenue}</p>
+                    <IndianRupee className="w-5 h-5 text-yellow-600 mx-auto" />
+                    <p className="text-sm font-medium">₹{property.revenue}</p>
                   </div>
                 </div>
 
@@ -187,7 +187,7 @@ function Properties() {
               <input type="text" name="address" placeholder="Address" className="w-full p-3 border rounded" value={newProperty.address} onChange={handleInputChange} />
               <input type="number" name="totalUnits" placeholder="Units" className="w-full p-3 border rounded" value={newProperty.totalUnits} onChange={handleInputChange} />
               <input type="text" name="occupancy" placeholder="Occupancy (%)" className="w-full p-3 border rounded" value={newProperty.occupancy} onChange={handleInputChange} />
-              <input type="number" name="revenue" placeholder="Revenue ($)" className="w-full p-3 border rounded" value={newProperty.revenue} onChange={handleInputChange} />
+              <input type="number" name="revenue" placeholder="Revenue (₹)" className="w-full p-3 border rounded" value={newProperty.revenue} onChange={handleInputChange} />
 
               <input type="file" accept="image/*" onChange={handleImageChange} className="w-full p-2 border rounded" />
               {preview && <img src={preview} alt="Preview" className="w-20 h-20 object-cover rounded-lg border" />}
@@ -195,9 +195,12 @@ function Properties() {
               <button className="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700" disabled={loading}>{loading ? "Saving..." : "Save Property"}</button>
             </form>
           </div>
+
         </div>
       )}
+       <ChatBot/>
     </div>
+   
   );
 }
 

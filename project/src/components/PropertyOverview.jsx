@@ -89,7 +89,7 @@ function PropertyOverview() {
                         </div>
                         <div className="flex items-center text-sm text-gray-500">
                           <DollarSign className="w-4 h-4 mr-1" />
-                          ${property.revenue}
+                          ₹{property.revenue}
                         </div>
                       </div>
                     </div>
