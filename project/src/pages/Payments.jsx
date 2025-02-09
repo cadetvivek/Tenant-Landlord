@@ -26,6 +26,22 @@ const PaymentHistory = () => {
       property: 'Studio Apartment Near Metro',
       status: 'Failed',
       transactionId: 'RZP456123789'
+    },
+    {
+      id: 4,
+      date: '2025-02-10',
+      amount: '₹25,000',
+      property: 'Studio Apartment Near Metro',
+      status: 'Success',
+      transactionId: 'RZP456123789'
+    },
+    {
+      id: 5,
+      date: '2025-02-11',
+      amount: '₹20,000',
+      property: 'Studio Apartment Near Metro',
+      status: 'Failed',
+      transactionId: 'RZP456123789'
     }
   ];
 

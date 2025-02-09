@@ -15,7 +15,7 @@ import Messages from "./pages/Messages";
 import Payments from "./pages/Payments";
 import Schedule from "./pages/Schedule";
 import Signup from "./pages/Signup";
-import DashboardStats from "./components/DashboardStats"
+// import DashboardStats from "./components/DashboardStats"
 
 function PrivateRoute({ children }) {
   const { isAuthenticated } = useAuth();
@@ -44,9 +44,9 @@ function App() {
             <Route index element={<Dashboard />} />
             <Route path="properties" element={<Properties />} />
             <Route path="maintenance" element={<Maintenance />} />
-            <Route path="messages" element={<Messages />} />
-            <Route path="payments" element={<Payments />} />
+            <Route path="messages" element={<Messages />} />          
             <Route path="schedule" element={<Schedule />} />
+            <Route path="payments" element={<Payments />} />
             
           
           </Route>
