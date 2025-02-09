@@ -120,7 +120,7 @@ function Schedule() {
       <div className="flex justify-between items-center mb-8">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Schedule For Maintenance</h1>
-          <p className="text-gray-600">Manage appointments and meetings</p>
+          <p className="text-gray-600">Manage appointments or meetings</p>
         </div>
       </div>
 
