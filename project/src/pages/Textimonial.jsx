@@ -16,7 +16,7 @@ const testimonials = [
     date: "February 1, 2024",
     rating: 5,
     text: "The rent tracking system is a lifesaver! The reminders help me stay on top of payments, and I can see my history anytime.Managing multiple properties has never been this simple. I can track maintenance requests, payments, and messages in one place!",
-    image: "https://avatars.githubusercontent.com/u/181267861?v=4&size=40" // Placeholder image
+    image: "https://avatars.githubusercontent.com/u/181267861?v=4" // Placeholder image
   },
   {
     id: 3,

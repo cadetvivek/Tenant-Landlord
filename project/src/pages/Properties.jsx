@@ -145,7 +145,7 @@ function Properties() {
                 <div className="mt-4 grid grid-cols-3 gap-4">
                   <div className="text-center">
                     <Building2 className="w-5 h-5 text-blue-600 mx-auto" />
-                    <p className="text-sm font-medium">{property.totalUnits} Units</p>
+                    <p className="text-sm font-medium">{property.units} Units</p>
                   </div>
                   <div className="text-center">
                     <Users className="w-5 h-5 text-green-600 mx-auto" />
