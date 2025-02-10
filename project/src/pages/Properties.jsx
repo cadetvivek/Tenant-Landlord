@@ -1,8 +1,10 @@
+
 import React, { useState, useEffect } from "react";
 import { Building2, Users, IndianRupee, Plus, X, Trash } from "lucide-react";
 import axios from "axios";
 import { useAuth } from "../contexts/AuthContext";
 import ChatBot from "../components/ChateBot";
+
 function Properties() {
   const [properties, setProperties] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -24,8 +26,7 @@ function Properties() {
     fetchProperties();
   }, []);
 
-  console.log(user.role);
-
+  // Existing fetch, delete, and form handling functions remain the same
   const fetchProperties = async () => {
     try {
       const response = await axios.get("https://landlordbackend.onrender.com/getProperties");
@@ -63,7 +64,7 @@ function Properties() {
     const file = e.target.files[0];
     if (file) {
       setImage(file);
-      setPreview(URL.createObjectURL(file)); // Show preview before uploading
+      setPreview(URL.createObjectURL(file));
     }
   };
 
@@ -90,9 +91,9 @@ function Properties() {
       });
 
       if (response.data && response.data.status) {
-        setShowModal(false); // Close modal after successful submission
+        setShowModal(false);
         resetForm();
-        fetchProperties(); // Update properties list
+        fetchProperties();
       } else {
         console.error("Unexpected API response:", response.data);
       }
@@ -116,91 +117,173 @@ function Properties() {
   };
 
   return (
-    <div className="container mx-auto p-6">
-      {/* Header */}
-      {user?.role === "LandLord" && (
-        <button
-          className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-          onClick={() => setShowModal(true)}
-        >
-          <Plus className="w-5 h-5 mr-2" />
-          Add Property
-        </button>
-      )}
+    <div className="min-h-screen bg-gray-50">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        {/* Header remains the same */}
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Properties</h1>
+          {user?.role === "LandLord" && (
+            <button
+              className="inline-flex items-center px-3 sm:px-4 py-2 bg-blue-600 text-white text-sm sm:text-base rounded-lg hover:bg-blue-700 transition-colors duration-200"
+              onClick={() => setShowModal(true)}
+            >
+              <Plus className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2" />
+              <span className="hidden sm:inline">Add Property</span>
+              <span className="sm:hidden">Add</span>
+            </button>
+          )}
+        </div>
 
-      {/* Properties Grid */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mt-4">
-        {properties.length > 0 ? (
-          properties.map((property) => (
-            <div key={property._id} className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow p-4 relative">
-              <img
-                src={property.image_url || "https://via.placeholder.com/400"}
-                alt={property.title}
-                className="w-full h-48 object-cover rounded-t-lg"
-              />
-              <div className="p-4">
-                <h3 className="text-lg font-semibold text-gray-900">{property.title}</h3>
-                <p className="text-sm text-gray-500 mt-1">{property.address}</p>
+        {/* Properties Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          {properties.length > 0 ? (
+            properties.map((property) => (
+              <div key={property._id} className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden">
+                <div className="relative">
+                  <img
+                    src={property.image_url || "https://via.placeholder.com/400"}
+                    alt={property.title}
+                    className="w-full h-40 sm:h-48 object-cover"
+                  />
+                  {user?.role === "LandLord" && (
+                    <button
+                      className="absolute top-2 right-2 bg-red-500 text-white p-1.5 sm:p-2 rounded-full hover:bg-red-600 transition-colors duration-200"
+                      onClick={() => handleDelete(property._id)}
+                    >
+                      <Trash className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </button>
+                  )}
+                </div>
+                <div className="p-3 sm:p-4">
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-900 line-clamp-1">{property.title}</h3>
+                  <p className="text-xs sm:text-sm text-gray-500 mt-1 line-clamp-2">{property.address}</p>
 
-                <div className="mt-4 grid grid-cols-3 gap-4">
-                  <div className="text-center">
-                    <Building2 className="w-5 h-5 text-blue-600 mx-auto" />
-                    <p className="text-sm font-medium">{property.units} Units</p>
-                  </div>
-                  <div className="text-center">
-                    <Users className="w-5 h-5 text-green-600 mx-auto" />
-                    <p className="text-sm font-medium">{property.occupancy}%</p>
-                  </div>
-                  <div className="text-center">
-                    <IndianRupee className="w-5 h-5 text-yellow-600 mx-auto" />
-                    <p className="text-sm font-medium">₹{property.revenue}</p>
+                  {/* Updated metrics section with better mobile responsiveness */}
+                  <div className="mt-3 sm:mt-4 grid grid-cols-3 gap-1 sm:gap-4">
+                    <div className="flex flex-col items-center p-1 sm:p-2 bg-gray-50 rounded-lg">
+                      <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
+                      <p className="text-[10px] sm:text-sm font-medium mt-1 break-words text-center">
+                        {property.units} 
+                        <span className="block text-[8px] sm:text-xs text-gray-500">Units</span>
+                      </p>
+                    </div>
+                    <div className="flex flex-col items-center p-1 sm:p-2 bg-gray-50 rounded-lg">
+                      <Users className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" />
+                      <p className="text-[10px] sm:text-sm font-medium mt-1 break-words text-center">
+                        {property.occupancy}
+                        <span className="block text-[8px] sm:text-xs text-gray-500">Occupancy</span>
+                      </p>
+                    </div>
+                    <div className="flex flex-col items-center p-1 sm:p-2 bg-gray-50 rounded-lg">
+                      <IndianRupee className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-600" />
+                      <p className="text-[10px] sm:text-sm font-medium mt-1 break-words text-center">
+                        ₹{property.revenue}
+                        <span className="block text-[8px] sm:text-xs text-gray-500">Revenue</span>
+                      </p>
+                    </div>
                   </div>
                 </div>
+              </div>
+            ))
+          ) : (
+            <div className="col-span-full text-center py-8">
+              <p className="text-gray-500">No properties available</p>
+            </div>
+          )}
+        </div>
 
-                {user?.role === "LandLord" && (
-                  <button
-                    className="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full hover:bg-red-600"
-                    onClick={() => handleDelete(property._id)}
-                  >
-                    <Trash className="w-5 h-5" />
-                  </button>
-                )}
+        {/* Modal Section - Updated form fields for better mobile handling */}
+        {showModal && (
+          <div className="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+            <div className="flex items-end sm:items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+              <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" onClick={() => setShowModal(false)}></div>
+
+              <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+              <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle w-full sm:max-w-lg">
+                <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                  <div className="flex justify-between items-center mb-4">
+                    <h3 className="text-lg sm:text-xl font-medium text-gray-900">Add Property</h3>
+                    <button onClick={() => setShowModal(false)} className="text-gray-400 hover:text-gray-500">
+                      <X className="w-5 h-5" />
+                    </button>
+                  </div>
+
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    <input
+                      type="text"
+                      name="title"
+                      placeholder="Property Name"
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+                      value={newProperty.title}
+                      onChange={handleInputChange}
+                    />
+                    <input
+                      type="text"
+                      name="address"
+                      placeholder="Address"
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+                      value={newProperty.address}
+                      onChange={handleInputChange}
+                    />
+                    {/* Updated grid for better mobile responsiveness */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <input
+                        type="number"
+                        name="totalUnits"
+                        placeholder="Units"
+                        className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+                        value={newProperty.totalUnits}
+                        onChange={handleInputChange}
+                      />
+                      <input
+                        type="text"
+                        name="occupancy"
+                        placeholder="Occupancy (%)"
+                        className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+                        value={newProperty.occupancy}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                    <input
+                      type="number"
+                      name="revenue"
+                      placeholder="Revenue (₹)"
+                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+                      value={newProperty.revenue}
+                      onChange={handleInputChange}
+                    />
+
+                    <div className="space-y-2">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+                      />
+                      {preview && (
+                        <div className="mt-2">
+                          <img src={preview} alt="Preview" className="w-20 h-20 object-cover rounded-lg border" />
+                        </div>
+                      )}
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+                    >
+                      {loading ? "Saving..." : "Save Property"}
+                    </button>
+                  </form>
+                </div>
               </div>
             </div>
-          ))
-        ) : (
-          <p className="text-gray-500">No properties available</p>
+          </div>
         )}
       </div>
-
-      {/* Add Property Modal */}
-      {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
-            <div className="flex justify-between mb-4">
-              <h2 className="text-2xl font-bold">Add Property</h2>
-              <X className="w-6 h-6 cursor-pointer" onClick={() => setShowModal(false)} />
-            </div>
-
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <input type="text" name="title" placeholder="Property Name" className="w-full p-3 border rounded" value={newProperty.title} onChange={handleInputChange} />
-              <input type="text" name="address" placeholder="Address" className="w-full p-3 border rounded" value={newProperty.address} onChange={handleInputChange} />
-              <input type="number" name="totalUnits" placeholder="Units" className="w-full p-3 border rounded" value={newProperty.totalUnits} onChange={handleInputChange} />
-              <input type="text" name="occupancy" placeholder="Occupancy (%)" className="w-full p-3 border rounded" value={newProperty.occupancy} onChange={handleInputChange} />
-              <input type="number" name="revenue" placeholder="Revenue (₹)" className="w-full p-3 border rounded" value={newProperty.revenue} onChange={handleInputChange} />
-
-              <input type="file" accept="image/*" onChange={handleImageChange} className="w-full p-2 border rounded" />
-              {preview && <img src={preview} alt="Preview" className="w-20 h-20 object-cover rounded-lg border" />}
-
-              <button className="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700" disabled={loading}>{loading ? "Saving..." : "Save Property"}</button>
-            </form>
-          </div>
-
-        </div>
-      )}
-       <ChatBot/>
+      <ChatBot />
     </div>
-   
   );
 }
 
